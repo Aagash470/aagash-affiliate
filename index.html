@@ -335,24 +335,11 @@
 
   </div>
 </section><!-- FULL PRODUCT MARKETPLACE --><section id="marketplace" style="margin-top:60px; text-align:center;">
-  <h2 style="color:#00eaff;">🛍 Full Product Marketplace</h2>
-  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px; margin-top:25px; padding:10px;">
-    <div class="animated-card" style="background:#112233; padding:20px; border-radius:12px; border:1px solid #00eaff;">
-      <img src="https://via.placeholder.com/250x150" style="width:100%; border-radius:8px;">
-      <h3>Product 1</h3>
-      <p>Light Therapy Device</p>
-    </div>
-    <div class="animated-card" style="background:#112233; padding:20px; border-radius:12px; border:1px solid #00eaff;">
-      <img src="https://via.placeholder.com/250x150" style="width:100%; border-radius:8px;">
-      <h3>Product 2</h3>
-      <p>AlgePrime Formula</p>
-    </div>
-    <div class="animated-card" style="background:#112233; padding:20px; border-radius:12px; border:1px solid #00eaff;">
-      <img src="https://via.placeholder.com/250x150" style="width:100%; border-radius:8px;">
-      <h3>Product 3</h3>
-      <p>Crypto Quantum Leap</p>
-    </div>
-  </div>
-</section><!-- ANIMATED BAR CHART --><section id="animatedGraph" style="margin-top:60px; text-align:center;">
-  <h2 style="color:#00eaff;">📈 Animated Bar Chart</h2>
-  <div style="height:250px; width:100%;
+  <h2 style="color:#00eaff;">🛍 Full Product Marketplace</h2><!-- SEARCH BAR --><input id="searchBox" type="text" onkeyup="searchProducts()" placeholder="Search products..." style="width:90%; padding:12px; margin-top:20px; border-radius:8px; background:#0a1a2b; border:1px solid #00eaff; color:#fff;"><!-- CATEGORY FILTER BUTTONS --><div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+  <button onclick="filterCategory('All')" style="padding:10px 20px; background:#00eaff; border-radius:8px;">All</button>
+  <button onclick="filterCategory('Digital Products')" style="padding:10px 20px; background:#00eaff; border-radius:8px;">Digital</button>
+  <button onclick="filterCategory('E-commerce')" style="padding:10px 20px; background:#00eaff; border-radius:8px;">Amazon</button>
+  <button onclick="filterCategory('Make Money')" style="padding:10px 20px; background:#00eaff; border-radius:8px;">Make Money</button>
+  <button onclick="filterCategory('AI / Tools')" style="padding:10px 20px; background:#00eaff; border-radius:8px;">AI Tools</button>
+</div><!-- IMPORT / EXPORT BUTTONS --><div style="margin-top:20px;">
+  <button onclick="exportProducts()" style="padding:10px 20px; background:#00ff88; border-radius
