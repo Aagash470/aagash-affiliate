@@ -1,72 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Aagash Affiliate Hub 🚀</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aagash Affiliate Hub</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #000;
+    }
 
-<style>
-    body { font-family: Arial; background: #f3f3f3; text-align: center; }
-    .box { margin-top: 40px; }
-    input { padding: 8px; margin: 5px; width: 250px; }
-    button { padding: 8px 20px; margin: 5px; cursor: pointer; }
-</style>
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 80px;
+      height: 100vh;
+      background: #f4f4f4;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      gap: 25px;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #555;
+      font-weight: bold;
+      text-align: center;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    /* Topbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 80px;
+      right: 0;
+      height: 60px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .page {
+      margin-left: 100px;
+      margin-top: 80px;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .card {
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      background: #007bff;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>Aagash Affiliate Hub 🚀</h1>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <a href="#" onclick="showPage('dashboard')">🏠</a>
+  <a href="#" onclick="showPage('product')">📦</a>
+  <a href="#" onclick="showPage('categories')">📂</a>
+  <a href="#" onclick="showPage('search')">🔍</a>
+  <a href="#" onclick="showPage('clicks')">📊</a>
+  <a href="#" onclick="showPage('earnings')">💰</a>
+  <a href="#" onclick="showPage('settings')">⚙️</a>
+  <a href="#" onclick="showPage('profile')">👤</a>
+  <a href="#" onclick="showPage('import')">➕</a>
+  <a href="#" onclick="showPage('admin')">🛠</a>
+</div>
 
-<div class="box">
-    <h2>Login / Signup</h2>
+<!-- TOPBAR -->
+<div class="topbar">
+  <h2>Aagash Hub</h2>
+  <div>🔔 ⚙️ 👤</div>
+</div>
 
-    <input type="email" id="email" placeholder="Enter Email" /><br>
-    <input type="password" id="password" placeholder="Enter Password" /><br>
+<!-- DASHBOARD -->
+<div id="dashboard" class="page">
+  <h1>Dashboard</h1>
+  <div class="card"><h2>Total Clicks: 0</h2></div>
+  <div class="card"><h2>Earnings: $0.00</h2></div>
+</div>
 
-    <button onclick="loginUser()">Login</button>
-    <button onclick="signupUser()">Signup</button>
+<!-- SINGLE PRODUCT PAGE -->
+<div id="product" class="page" style="display:none;">
+  <h1>Product Page</h1>
+  <div class="card">
+    <h2>Product Title</h2>
+    <p>Full description here...</p>
+    <a class="btn">View Affiliate Link</a>
+  </div>
+</div>
 
-    <p id="msg" style="color: green; font-weight: bold;"></p>
+<!-- CATEGORIES -->
+<div id="categories" class="page" style="display:none;">
+  <h1>Categories</h1>
+  <div class="card">Weight Loss</div>
+  <div class="card">Make Money</div>
+  <div class="card">Crypto</div>
+  <div class="card">Health</div>
+</div>
+
+<!-- SEARCH -->
+<div id="search" class="page" style="display:none;">
+  <h1>Search Products</h1>
+  <input class="input" placeholder="Search...">
+</div>
+
+<!-- CLICK ANALYTICS -->
+<div id="clicks" class="page" style="display:none;">
+  <h1>Click Tracking Analytics</h1>
+  <div class="card">Total Clicks: 0</div>
+  <div class="card">Clicks Today: 0</div>
+</div>
+
+<!-- EARNINGS -->
+<div id="earnings" class="page" style="display:none;">
+  <h1>Earnings Analytics</h1>
+  <div class="card">Earnings Today: $0.00</div>
+  <div class="card">Earnings This Month: $0.00</div>
+</div>
+
+<!-- SETTINGS -->
+<div id="settings" class="page" style="display:none;">
+  <h1>Settings</h1>
+  <input class="input" placeholder="Change Username">
+  <input class="input" placeholder="Change Email">
+  <button class="btn">Save</button>
+</div>
+
+<!-- PROFILE -->
+<div id="profile" class="page" style="display:none;">
+  <h1>Profile</h1>
+  <div class="card">Email: user@example.com</div>
+</div>
+
+<!-- PRODUCT IMPORT PAGE -->
+<div id="import" class="page" style="display:none;">
+  <h1>Import Affiliate Product</h1>
+  <input class="input" placeholder="Paste product link here...">
+  <button class="btn">Import</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin" class="page" style="display:none;">
+  <h1>Admin Panel</h1>
+  <div class="card">Manage Products</div>
+  <div class="card">Manage Users</div>
+  <div class="card">Manage Click Data</div>
 </div>
 
 <script>
-    const supabaseUrl = "https://edqbmdxvpggofifogxlu.supabase.co"; 
-    const supabaseKey = "sb_publishable_H-S0qNZDZZxoUVlpVuizrg_7W9zjx1s"; 
-
-    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-
-    async function signupUser() {
-        let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-
-        const { data, error } = await supabaseClient.auth.signUp({
-            email: email,
-            password: password
-        });
-
-        if (error) {
-            document.getElementById("msg").innerHTML = "Signup Error: " + error.message;
-        } else {
-            document.getElementById("msg").innerHTML = "Signup Successful ✔ Check Email!";
-        }
-    }
-
-    async function loginUser() {
-        let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
-
-        if (error) {
-            document.getElementById("msg").innerHTML = "Login Error: " + error.message;
-        } else {
-            document.getElementById("msg").innerHTML = "Login Successful ✔";
-        }
-    }
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+  document.getElementById(page).style.display = 'block';
+}
 </script>
 
 </body>
