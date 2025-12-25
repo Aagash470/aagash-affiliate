@@ -1,59 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aagash Affiliate Hub</title>
-
-  <link rel="stylesheet" href="style.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aagash Affiliate Hub 🚀</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<header>Aagash Affiliate Hub 🚀</header>
+    <!-- HEADER -->
+    <header>
+        <h1>Aagash Affiliate Hub 🚀</h1>
+    </header>
 
-<!-- AUTH BOX -->
-<div id="auth-box">
-    <h3>Login / Signup</h3>
+    <!-- AUTH BOX -->
+    <section id="auth-section">
+        <div class="auth-box">
+            <h2>Login / Signup</h2>
 
-    <input id="email" type="email" placeholder="Enter Email">
-    <input id="password" type="password" placeholder="Enter Password">
+            <input type="email" id="email" placeholder="Enter Email" />
+            <input type="password" id="password" placeholder="Enter Password" />
 
-    <button onclick="login()">Login</button>
-    <button onclick="signup()" style="background:#28a745;">Signup</button>
-</div>
+            <!-- ⭐ FUNCTION ATTACHED BUTTONS -->
+            <button class="login-btn" onclick="loginUser()">Login</button>
+            <button class="signup-btn" onclick="signupUser()">Signup</button>
+        </div>
+    </section>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="container">
+    <!-- PRODUCT SECTION (VISIBLE AFTER LOGIN) -->
+    <section id="dashboard" style="display:none;">
+        <h2>Welcome 👋</h2>
 
-    <button onclick="logout()" style="background:#dc3545;color:#fff;padding:12px;border:none;border-radius:8px;margin-bottom:20px;">
-        Logout
-    </button>
+        <div id="product-box">
+            <h3>Add Product</h3>
+            <input type="text" id="product-name" placeholder="Product Name">
+            <input type="text" id="product-link" placeholder="Product Link">
+            <button onclick="addProduct()">Add Product</button>
+        </div>
 
-    <h2>Add Product</h2>
+        <h3>Your Products</h3>
+        <ul id="product-list"></ul>
 
-    <div id="product-form">
+        <button onclick="logoutUser()" class="logout-btn">Logout</button>
+    </section>
 
-        <input id="p_title" placeholder="Product Title">
-        <textarea id="p_desc" placeholder="Product Description"></textarea>
-        <input id="p_image" placeholder="Image URL">
-        <input id="p_price" type="number" placeholder="Price (₹)">
-        <input id="p_category" placeholder="Category">
-        <input id="p_url" placeholder="Affiliate / Product URL">
-
-        <button onclick="addProduct()" style="margin-top:15px;background:#007bff;color:#fff;">
-            Add Product
-        </button>
-    </div>
-
-    <h2>Your Products</h2>
-
-    <div id="product-list"></div>
-</div>
-
-<script src="script.js"></script>
-
+    <script type="module" src="script.js"></script>
 </body>
 </html>
