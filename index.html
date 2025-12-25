@@ -1,200 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aagash Affiliate Hub</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #ffffff;
-      color: #000;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 80px;
-      height: 100vh;
-      background: #f4f4f4;
-      border-right: 1px solid #ddd;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-      gap: 25px;
-    }
-
-    .sidebar a {
-      text-decoration: none;
-      color: #555;
-      font-weight: bold;
-      text-align: center;
-      font-size: 14px;
-      width: 100%;
-    }
-
-    /* Topbar */
-    .topbar {
-      position: fixed;
-      top: 0;
-      left: 80px;
-      right: 0;
-      height: 60px;
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-    }
-
-    .page {
-      margin-left: 100px;
-      margin-top: 80px;
-      padding: 20px;
-    }
-
-    h1 {
-      font-size: 24px;
-    }
-
-    .card {
-      padding: 20px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      padding: 12px 20px;
-      background: #007bff;
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
-    .input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 10px;
-      border: 1px solid #ccc;
-    }
-  </style>
+  <title>Aagash Market Hub</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+<body>  <!-- TOPBAR -->  <header class="topbar">
+    <h1 class="logo">Aagash Market Hub</h1>
+    <nav class="topnav">
+      <button id="logoutBtn">Logout</button>
+    </nav>
+  </header>  <!-- SIDEBAR -->  <aside class="sidebar">
+    <a href="#dashboard" class="nav-link">Dashboard</a>
+    <a href="#products" class="nav-link">Products</a>
+    <a href="#addProduct" class="nav-link">Add Product</a>
+    <a href="#analytics" class="nav-link">Analytics</a>
+    <a href="#settings" class="nav-link">Settings</a>
+  </aside>  <!-- MAIN CONTENT -->  <main id="appContent"><!-- LOGIN PAGE -->
+<section id="loginPage" class="page active">
+  <h2>Login</h2>
+  <input id="loginEmail" type="email" placeholder="Email" />
+  <input id="loginPassword" type="password" placeholder="Password" />
+  <button id="loginUserBtn">Login</button>
+  <p>No account? <span id="showSignup">Signup</span></p>
+</section>
 
-<body>
+<!-- SIGNUP PAGE -->
+<section id="signupPage" class="page">
+  <h2>Create Account</h2>
+  <input id="signupName" type="text" placeholder="Full Name" />
+  <input id="signupEmail" type="email" placeholder="Email" />
+  <input id="signupPassword" type="password" placeholder="Password" />
+  <button id="signupUserBtn">Create Account</button>
+  <p>Already have account? <span id="showLogin">Login</span></p>
+</section>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-  <a href="#" onclick="showPage('dashboard')">🏠</a>
-  <a href="#" onclick="showPage('product')">📦</a>
-  <a href="#" onclick="showPage('categories')">📂</a>
-  <a href="#" onclick="showPage('search')">🔍</a>
-  <a href="#" onclick="showPage('clicks')">📊</a>
-  <a href="#" onclick="showPage('earnings')">💰</a>
-  <a href="#" onclick="showPage('settings')">⚙️</a>
-  <a href="#" onclick="showPage('profile')">👤</a>
-  <a href="#" onclick="showPage('import')">➕</a>
-  <a href="#" onclick="showPage('admin')">🛠</a>
-</div>
-
-<!-- TOPBAR -->
-<div class="topbar">
-  <h2>Aagash Hub</h2>
-  <div>🔔 ⚙️ 👤</div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="page">
-  <h1>Dashboard</h1>
-  <div class="card"><h2>Total Clicks: 0</h2></div>
-  <div class="card"><h2>Earnings: $0.00</h2></div>
-</div>
-
-<!-- SINGLE PRODUCT PAGE -->
-<div id="product" class="page" style="display:none;">
-  <h1>Product Page</h1>
-  <div class="card">
-    <h2>Product Title</h2>
-    <p>Full description here...</p>
-    <a class="btn">View Affiliate Link</a>
+<!-- DASHBOARD PAGE -->
+<section id="dashboard" class="page">
+  <h2>Dashboard</h2>
+  <div class="dashboard-cards">
+    <div class="card">
+      <h3>Total Clicks</h3>
+      <p id="totalClicks">0</p>
+    </div>
+    <div class="card">
+      <h3>Total Earnings</h3>
+      <p id="totalEarnings">$0.00</p>
+    </div>
+    <div class="card">
+      <h3>Top Product</h3>
+      <p id="topProduct">None</p>
+    </div>
   </div>
-</div>
+  <div id="chartArea" class="chart-box">(Chart Loads Here)</div>
+</section>
 
-<!-- CATEGORIES -->
-<div id="categories" class="page" style="display:none;">
-  <h1>Categories</h1>
-  <div class="card">Weight Loss</div>
-  <div class="card">Make Money</div>
-  <div class="card">Crypto</div>
-  <div class="card">Health</div>
-</div>
+<!-- PRODUCTS PAGE -->
+<section id="products" class="page">
+  <h2>Products</h2>
+  <div id="productList" class="product-grid"></div>
+</section>
 
-<!-- SEARCH -->
-<div id="search" class="page" style="display:none;">
-  <h1>Search Products</h1>
-  <input class="input" placeholder="Search...">
-</div>
+<!-- ADD PRODUCT PAGE -->
+<section id="addProduct" class="page">
+  <h2>Add Product</h2>
+  <input id="productLink" type="text" placeholder="Paste affiliate link" />
+  <button id="detectBtn">Auto Detect</button>
+  <button id="saveProductBtn">Save Product</button>
+  <div id="detectOutput" class="detect-box"></div>
+</section>
 
-<!-- CLICK ANALYTICS -->
-<div id="clicks" class="page" style="display:none;">
-  <h1>Click Tracking Analytics</h1>
-  <div class="card">Total Clicks: 0</div>
-  <div class="card">Clicks Today: 0</div>
-</div>
+<!-- ANALYTICS PAGE -->
+<section id="analytics" class="page">
+  <h2>Analytics</h2>
+  <div id="analyticsBox"></div>
+</section>
 
-<!-- EARNINGS -->
-<div id="earnings" class="page" style="display:none;">
-  <h1>Earnings Analytics</h1>
-  <div class="card">Earnings Today: $0.00</div>
-  <div class="card">Earnings This Month: $0.00</div>
-</div>
+<!-- SETTINGS PAGE -->
+<section id="settings" class="page">
+  <h2>Settings</h2>
+  <label>Theme:</label>
+  <select id="themeSelect">
+    <option value="neon">Neon Blue</option>
+    <option value="dark">Dark</option>
+    <option value="light">Light</option>
+  </select>
+</section>
 
-<!-- SETTINGS -->
-<div id="settings" class="page" style="display:none;">
-  <h1>Settings</h1>
-  <input class="input" placeholder="Change Username">
-  <input class="input" placeholder="Change Email">
-  <button class="btn">Save</button>
-</div>
-
-<!-- PROFILE -->
-<div id="profile" class="page" style="display:none;">
-  <h1>Profile</h1>
-  <div class="card">Email: user@example.com</div>
-</div>
-
-<!-- PRODUCT IMPORT PAGE -->
-<div id="import" class="page" style="display:none;">
-  <h1>Import Affiliate Product</h1>
-  <input class="input" placeholder="Paste product link here...">
-  <button class="btn">Import</button>
-</div>
-
-<!-- ADMIN PANEL -->
-<div id="admin" class="page" style="display:none;">
-  <h1>Admin Panel</h1>
-  <div class="card">Manage Products</div>
-  <div class="card">Manage Users</div>
-  <div class="card">Manage Click Data</div>
-</div>
-
-<script>
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-  document.getElementById(page).style.display = 'block';
-}
-</script>
-
-</body>
-</html>
+  </main>  <script src="script.js"></script></body>
+  </html>
