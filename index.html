@@ -1,41 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aagash Affiliate Hub</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
-  <h2>Aagash Affiliate Hub</h2>
+<header>Aagash Affiliate Hub 🚀</header>
 
-  <div id="auth-box">
+<!-- AUTH BOX -->
+<div id="auth-box">
     <h3>Login / Signup</h3>
-    <input id="email" type="email" placeholder="Email" />
-    <input id="password" type="password" placeholder="Password" />
-    <button onclick="signUp()">Signup</button>
+
+    <input id="email" type="email" placeholder="Enter Email">
+    <input id="password" type="password" placeholder="Enter Password">
+
     <button onclick="login()">Login</button>
-  </div>
+    <button onclick="signup()" style="background:#28a745;">Signup</button>
+</div>
 
-  <div id="dashboard" style="display:none;">
-    <h3>Dashboard</h3>
-    <button onclick="logout()">Logout</button>
+<!-- DASHBOARD -->
+<div id="dashboard" class="container">
 
-    <h4>Add New Product</h4>
-    <input id="title" placeholder="Title" />
-    <input id="description" placeholder="Description" />
-    <input id="image_url" placeholder="Image URL" />
-    <input id="price" placeholder="Price" />
-    <input id="category" placeholder="Category" />
-    <input id="product_url" placeholder="Affiliate Link" />
+    <button onclick="logout()" style="background:#dc3545;color:#fff;padding:12px;border:none;border-radius:8px;margin-bottom:20px;">
+        Logout
+    </button>
 
-    <button onclick="addProduct()">Add Product</button>
+    <h2>Add Product</h2>
 
-    <h4>Your Products</h4>
+    <div id="product-form">
+
+        <input id="p_title" placeholder="Product Title">
+        <textarea id="p_desc" placeholder="Product Description"></textarea>
+        <input id="p_image" placeholder="Image URL">
+        <input id="p_price" type="number" placeholder="Price (₹)">
+        <input id="p_category" placeholder="Category">
+        <input id="p_url" placeholder="Affiliate / Product URL">
+
+        <button onclick="addProduct()" style="margin-top:15px;background:#007bff;color:#fff;">
+            Add Product
+        </button>
+    </div>
+
+    <h2>Your Products</h2>
+
     <div id="product-list"></div>
-  </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>
