@@ -1,31 +1,41 @@
-/* Aagash Market Hub - Neon Dashboard Theme */
+// Aagash Market Hub - Script.js
 
-body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #00111f; color: #fff; }
+// Initialize Supabase Client const SUPABASE_URL = "https://edqbmdxvpggofifogxlu.supabase.co"; const SUPABASE_KEY = "sb_publishable_H-S0qNZDZZxoUVlpVuizrg_7W9zjx1s";
 
-/* SIDEBAR */ .sidebar { position: fixed; top: 0; left: 0; width: 70px; height: 100vh; background: #000; border-right: 2px solid #00eaff; display: flex; flex-direction: column; align-items: center; padding-top: 20px; gap: 25px; box-shadow: 0 0 20px #00eaff80; z-index: 10; }
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-.sidebar a { color: #00eaff; text-decoration: none; font-size: 14px; font-weight: bold; text-align: center; width: 100%; padding: 8px 0; transition: 0.3s; }
+//------------------------------------------------------ // USER AUTHENTICATION //------------------------------------------------------ async function signupUser() { const email = document.getElementById("signupEmail").value; const password = document.getElementById("signupPassword").value;
 
-.sidebar a:hover { background: #00eaff; color: #000; }
+let { data, error } = await supabase.auth.signUp({ email: email, password: password, });
 
-/* TOPBAR */ .topbar { position: fixed; top: 0; left: 70px; right: 0; height: 60px; background: #000; border-bottom: 2px solid #00eaff; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: 0 0 15px #00eaff70; z-index: 10; }
+if (error) { alert("Signup Failed: " + error.message); } else { alert("Signup Successful! Check your email."); } }
 
-/* PAGE WRAPPER */ .page { margin-left: 90px; padding-top: 80px; padding-bottom: 40px; width: calc(100% - 100px); }
+async function loginUser() { const email = document.getElementById("loginEmail").value; const password = document.getElementById("loginPassword").value;
 
-/* PRODUCT CARDS */ .product-card { background: #112233; padding: 20px; border-radius: 12px; border: 1px solid #00eaff; box-shadow: 0 0 12px #00eaff60; transition: 0.3s; }
+let { data, error } = await supabase.auth.signInWithPassword({ email: email, password: password, });
 
-.product-card:hover { transform: scale(1.03); box-shadow: 0 0 20px #00eaff; }
+if (error) { alert("Login Failed: " + error.message); } else { alert("Login Successful!"); window.location.href = "#dashboard"; } }
 
-/* BUTTONS */ .btn { background: #00eaff; color: #000; border: none; padding: 12px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+//------------------------------------------------------ // REAL PRODUCT IMPORT //------------------------------------------------------ async function importProduct() { const productName = document.getElementById("productName").value; const productLink = document.getElementById("productLink").value;
 
-.btn:hover { background: #fff; }
+let { data, error } = await supabase.from("products").insert([ { name: productName, link: productLink, clicks: 0, earnings: 0, }, ]);
 
-/* INPUTS */ input, select, textarea { width: 90%; padding: 12px; margin-top: 10px; border-radius: 8px; border: 1px solid #00eaff; background: #112233; color: white; }
+if (error) { alert("Product Import Failed: " + error.message); } else { alert("Product Added Successfully!"); } }
 
-/* GRID */ .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 25px; }
+//------------------------------------------------------ // CLICK TRACKER //------------------------------------------------------ async function trackClick(productId) { await supabase.rpc("increment_clicks", { pid: productId }); }
 
-/* ANALYTICS CARDS */ .analytics-box { background: #111; padding: 20px; border-radius: 12px; border: 1px solid #00eaff; box-shadow: 0 0 15px #00eaff50; }
+//------------------------------------------------------ // LOAD PRODUCTS FROM DATABASE //------------------------------------------------------ async function loadProducts() { let { data, error } = await supabase.from("products").select("*");
 
-/* CHART BOX */ .chart-box { background: #112233; height: 250px; border-radius: 12px; margin-top: 20px; box-shadow: 0 0 15px #00eaff40; }
+const list = document.getElementById("productList"); list.innerHTML = "";
 
-/* MOBILE RESPONSIVE */ @media (max-width: 600px) { .sidebar { width: 55px; } .topbar { left: 55px; } .page { margin-left: 65px; width: calc(100% - 70px); } }
+data.forEach((p) => { list.innerHTML += <div class="product-card"> <h3>${p.name}</h3> <a href="${p.link}" onclick="trackClick(${p.id})" target="_blank" class="btn">Open Link</a> </div>; }); }
+
+//------------------------------------------------------ // LOAD STATS //------------------------------------------------------ async function loadStats() { let { data, error } = await supabase.from("products").select("clicks, earnings");
+
+let totalClicks = 0; let totalEarnings = 0;
+
+data.forEach((p) => { totalClicks += p.clicks; totalEarnings += p.earnings; });
+
+document.getElementById("totalClicks").innerText = totalClicks; document.getElementById("totalEarnings").innerText = "$" + totalEarnings; }
+
+//------------------------------------------------------ // AUTO REFRESH DASHBOARD //------------------------------------------------------ setInterval(() => { loadStats(); loadProducts(); }, 5000);
