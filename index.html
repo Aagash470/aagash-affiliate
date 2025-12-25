@@ -1,50 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aagash Affiliate Hub 🚀</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<title>Aagash Affiliate Hub 🚀</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+    body { font-family: Arial; background: #f3f3f3; text-align: center; }
+    .box { margin-top: 40px; }
+    input { padding: 8px; margin: 5px; width: 250px; }
+    button { padding: 8px 20px; margin: 5px; cursor: pointer; }
+</style>
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <h1>Aagash Affiliate Hub 🚀</h1>
-    </header>
+<h1>Aagash Affiliate Hub 🚀</h1>
 
-    <!-- AUTH BOX -->
-    <section id="auth-section">
-        <div class="auth-box">
-            <h2>Login / Signup</h2>
+<div class="box">
+    <h2>Login / Signup</h2>
 
-            <input type="email" id="email" placeholder="Enter Email" />
-            <input type="password" id="password" placeholder="Enter Password" />
+    <input type="email" id="email" placeholder="Enter Email" /><br>
+    <input type="password" id="password" placeholder="Enter Password" /><br>
 
-            <!-- ⭐ FUNCTION ATTACHED BUTTONS -->
-            <button class="login-btn" onclick="loginUser()">Login</button>
-            <button class="signup-btn" onclick="signupUser()">Signup</button>
-        </div>
-    </section>
+    <button onclick="loginUser()">Login</button>
+    <button onclick="signupUser()">Signup</button>
 
-    <!-- PRODUCT SECTION (VISIBLE AFTER LOGIN) -->
-    <section id="dashboard" style="display:none;">
-        <h2>Welcome 👋</h2>
+    <p id="msg" style="color: green; font-weight: bold;"></p>
+</div>
 
-        <div id="product-box">
-            <h3>Add Product</h3>
-            <input type="text" id="product-name" placeholder="Product Name">
-            <input type="text" id="product-link" placeholder="Product Link">
-            <button onclick="addProduct()">Add Product</button>
-        </div>
+<script>
+    const supabaseUrl = "https://edqbmdxvpggofifogxlu.supabase.co"; 
+    const supabaseKey = "sb_publishable_H-S0qNZDZZxoUVlpVuizrg_7W9zjx1s"; 
 
-        <h3>Your Products</h3>
-        <ul id="product-list"></ul>
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-        <button onclick="logoutUser()" class="logout-btn">Logout</button>
-    </section>
+    async function signupUser() {
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
 
-    <script type="module" src="script.js"></script>
+        const { data, error } = await supabaseClient.auth.signUp({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            document.getElementById("msg").innerHTML = "Signup Error: " + error.message;
+        } else {
+            document.getElementById("msg").innerHTML = "Signup Successful ✔ Check Email!";
+        }
+    }
+
+    async function loginUser() {
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            document.getElementById("msg").innerHTML = "Login Error: " + error.message;
+        } else {
+            document.getElementById("msg").innerHTML = "Login Successful ✔";
+        }
+    }
+</script>
+
 </body>
 </html>
