@@ -1,125 +1,122 @@
-// ===========================
-// 1. Supabase Connection
-// ===========================
+// ------------------------
+// SUPABASE CONNECTION
+// ------------------------
 const SUPABASE_URL = "https://edqbmdxvpggofifogxlu.supabase.co";
 const SUPABASE_KEY = "sb_publishable_H-S0qNZDZZxoUVlpVuizrg_7W9zjx1s";
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ===========================
-// 2. Signup Function
-// ===========================
-async function signup() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    const { data, error } = await supabase.auth.signUp({
-        email,
-        password
-    });
-
-    if (error) {
-        alert("Signup Failed ❌: " + error.message);
-    } else {
-        alert("Signup Successful 🎉 Check your email!");
-    }
-}
-
-// ===========================
-// 3. Login Function
-// ===========================
+// ------------------------
+// LOGIN FUNCTION
+// ------------------------
 async function login() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    let email = document.getElementById("email").value;
+    let pass = document.getElementById("password").value;
 
     const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
+        email: email,
+        password: pass
     });
 
     if (error) {
-        alert("Login Failed ❌: " + error.message);
+        alert("Login failed: " + error.message);
     } else {
-        alert("Login Successful 🎉");
-        loadDashboard();
+        alert("Logged in successfully!");
+        showDashboard();
     }
 }
 
-// Show Dashboard After Login
-async function loadDashboard() {
-    document.getElementById("auth-box").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    fetchProducts();
-}
+// ------------------------
+// SIGNUP FUNCTION
+// ------------------------
+async function signup() {
+    let email = document.getElementById("email").value;
+    let pass = document.getElementById("password").value;
 
-// ===========================
-// 4. Add Product
-// ===========================
-async function addProduct() {
-    const title = document.getElementById("p_title").value;
-    const description = document.getElementById("p_desc").value;
-    const image_url = document.getElementById("p_image").value;
-    const price = document.getElementById("p_price").value;
-    const category = document.getElementById("p_category").value;
-    const product_url = document.getElementById("p_url").value;
-
-    const { data, error } = await supabase
-        .from("products")
-        .insert([
-            {
-                title,
-                description,
-                image_url,
-                price,
-                category,
-                product_url,
-                clicks: 0,
-                earnings: 0
-            }
-        ]);
+    const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: pass
+    });
 
     if (error) {
-        alert("Product Add Failed ❌: " + error.message);
+        alert("Signup failed: " + error.message);
     } else {
-        alert("Product Added Successfully 🎉");
-        fetchProducts();
+        alert("Signup success! Now login.");
     }
 }
 
-// ===========================
-// 5. Fetch Products
-// ===========================
-async function fetchProducts() {
+// ------------------------
+// LOGOUT
+// ------------------------
+async function logout() {
+    await supabase.auth.signOut();
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("auth-box").style.display = "block";
+}
+
+// ------------------------
+// SHOW DASHBOARD
+// ------------------------
+function showDashboard() {
+    document.getElementById("auth-box").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    loadProducts();
+}
+
+// ------------------------
+// ADD PRODUCT
+// ------------------------
+async function addProduct() {
+
+    let title = document.getElementById("p_title").value;
+    let desc = document.getElementById("p_desc").value;
+    let image = document.getElementById("p_image").value;
+    let price = document.getElementById("p_price").value;
+    let category = document.getElementById("p_category").value;
+    let url = document.getElementById("p_url").value;
+
+    const { data, error } = await supabase.from("products").insert([
+        {
+            title: title,
+            description: desc,
+            image_url: image,
+            price: price,
+            category: category,
+            product_url: url,
+            clicks: 0,
+            earnings: 0
+        }
+    ]);
+
+    if (error) {
+        alert("Error adding product: " + error.message);
+    } else {
+        alert("Product added!");
+        loadProducts();
+    }
+}
+
+// ------------------------
+// LOAD PRODUCTS
+// ------------------------
+async function loadProducts() {
     const { data, error } = await supabase
         .from("products")
         .select("*")
         .order("created_at", { ascending: false });
 
-    if (error) {
-        alert("Error loading products ❌");
-        return;
-    }
-
     let list = document.getElementById("product-list");
     list.innerHTML = "";
 
-    data.forEach(p => {
-        list.innerHTML += `
+    data.forEach(item => {
+        let card = `
             <div class="prod-card">
-                <img src="${p.image_url}" />
-                <h3>${p.title}</h3>
-                <p>${p.description}</p>
-                <p>₹${p.price}</p>
-                <a href="${p.product_url}" target="_blank">Buy / View</a>
+                <img src="${item.image_url}">
+                <h4>${item.title}</h4>
+                <p>${item.price} ₹</p>
+                <a href="${item.product_url}" target="_blank">Buy Now</a>
             </div>
         `;
+        list.innerHTML += card;
     });
-}
-
-// ===========================
-// 6. Logout
-// ===========================
-async function logout() {
-    await supabase.auth.signOut();
-    location.reload();
 }
